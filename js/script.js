@@ -1,21 +1,16 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
 
-	function onSuccess(contacts) {
+	navigator.contactsPhoneNumbers.list(function(contacts) {
+		console.log(contacts.length + ' contacts found');
 		for (var i = 0; i < contacts.length; i++) {
-			for (var j = 0; j < contacts[i].organizations.length; j++) {
-				alert("Pref: " + contacts[i].organizations[j].pref + "\n" + "Type: " + contacts[i].organizations[j].type + "\n" + "Name: " + contacts[i].organizations[j].name + "\n" + "Department: " + contacts[i].organizations[j].department + "\n" + "Title: " + contacts[i].organizations[j].title);
+			console.log(contacts[i].id + " - " + contacts[i].displayName);
+			for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+				var phone = contacts[i].phoneNumbers[j];
+				console.log("===> " + phone.type + "  " + phone.number + " (" + phone.normalizedNumber + ")");
 			}
 		}
-	};
-
-	function onError(contactError) {
-		alert('onError!');
-	};
-
-	var options = new ContactFindOptions();
-	options.filter = "";
-	options.multiple = true;
-	filter = ["displayName", "organizations"];
-	navigator.contacts.find(filter, onSuccess, onError, options);
+	}, function(error) {
+		console.error(error);
+	});
 }
