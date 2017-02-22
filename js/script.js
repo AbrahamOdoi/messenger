@@ -17,6 +17,5 @@ function onDeviceReady() {
 	options.filter = "";
 	options.multiple = true;
 	filter = ["displayName", "organizations"];
-	var mycontact = navigator.contacts.find(filter, onSuccess, onError, options);
-	alert(mycontact);
+	navigator.contacts.find(filter, onSuccess, onError, options);
 }
